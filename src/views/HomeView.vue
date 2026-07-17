@@ -128,7 +128,7 @@ const techItems = [
 }
 
 .hero-subtitle {
-  color: var(--muted);
+  color: var(--fg-secondary);
   font-size: 1.125rem; /* text-lg */
   max-width: 36rem; /* max-w-xl */
   line-height: 1.625; /* leading-relaxed */

@@ -6,8 +6,9 @@
   
   --bg: #FFFFFF;
   --fg: #18181B;
+  --fg-secondary: #3F3F46;
   --accent: #00FF9C;
-  --muted: #71717A;
+  --muted: #52525B;
   --border: #E4E4E7;
   --card-bg: rgba(244, 244, 245, 0.5);
   --card-border: #E4E4E7;
@@ -18,8 +19,9 @@
 .dark {
   --bg: #0A0A0B;
   --fg: #E4E4E7;
+  --fg-secondary: #D4D4D8;
   --accent: #00FF9C;
-  --muted: #71717A;
+  --muted: #A1A1AA;
   --border: #27272A;
   --card-bg: rgba(24, 24, 27, 0.5);
   --card-border: #27272A;
@@ -137,7 +139,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .markdown-body p {
-  color: var(--muted);
+  color: var(--fg-secondary);
   line-height: 1.625;
   margin-bottom: 1rem;
 }
@@ -183,7 +185,7 @@ h1, h2, h3, h4, h5, h6 {
   list-style-type: disc;
   list-style-position: inside;
   margin-bottom: 1rem;
-  color: var(--muted);
+  color: var(--fg-secondary);
   padding-left: 1rem;
 }
 
@@ -191,7 +193,7 @@ h1, h2, h3, h4, h5, h6 {
   list-style-type: decimal;
   list-style-position: inside;
   margin-bottom: 1rem;
-  color: var(--muted);
+  color: var(--fg-secondary);
   padding-left: 1rem;
 }
 
@@ -211,7 +213,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0 0.5rem 0.5rem 0;
   font-style: italic;
   margin: 1.5rem 0;
-  color: var(--muted);
+  color: var(--fg-secondary);
 }
 
 .markdown-body strong {

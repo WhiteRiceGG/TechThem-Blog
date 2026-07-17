@@ -227,7 +227,7 @@ const clearSearch = () => {
 }
 
 .item-excerpt {
-  color: var(--muted);
+  color: var(--fg-secondary);
   font-size: 1rem; /* text-base */
   margin-top: 0.25rem; /* mt-1 */
   display: -webkit-box;

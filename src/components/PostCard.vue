@@ -93,7 +93,7 @@ defineProps({
 }
 
 .post-excerpt {
-  color: var(--muted);
+  color: var(--fg-secondary);
   font-size: 1rem; /* text-base */
   line-height: 1.625; /* leading-relaxed */
   margin-bottom: 1.5rem; /* mb-6 */

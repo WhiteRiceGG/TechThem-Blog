@@ -158,7 +158,7 @@ const techStack = [
 }
 
 .about-text {
-  color: var(--muted);
+  color: var(--fg-secondary);
   line-height: 1.625; /* leading-relaxed */
   font-size: 1rem;
 }
@@ -190,7 +190,7 @@ const techStack = [
 
 .card-text {
   font-size: 1rem; /* text-base */
-  color: var(--muted);
+  color: var(--fg-secondary);
   line-height: 1.5;
 }
 
@@ -217,7 +217,7 @@ const techStack = [
 }
 
 .quote {
-  color: var(--muted);
+  color: var(--fg-secondary);
   font-size: 1rem; /* text-base */
   margin-bottom: 1.5rem; /* mb-6 */
   font-style: italic;
