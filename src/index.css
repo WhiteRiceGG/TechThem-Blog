@@ -14,6 +14,8 @@
   --card-border: #E4E4E7;
   --glow: rgba(0, 255, 156, 0.05);
   --grid-dots: rgba(24, 24, 27, 0.12);
+  --header-bg: rgba(255, 255, 255, 0.8);
+  --mobile-menu-bg: rgba(255, 255, 255, 0.95);
 }
 
 .dark {
@@ -27,9 +29,11 @@
   --card-border: #27272A;
   --glow: rgba(0, 255, 156, 0.05);
   --grid-dots: rgba(0, 255, 156, 0.10);
+  --header-bg: rgba(10, 10, 11, 0.8);
+  --mobile-menu-bg: rgba(10, 10, 11, 0.95);
 }
 
-/* Base resets & styles */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -62,10 +66,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.025em;
   color: var(--fg);
   transition: color 0.2s ease;
-  scroll-margin-top: 90px; /* Offset for fixed header */
+  scroll-margin-top: 90px; 
 }
 
-/* Custom Scrollbar */
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 8px;
@@ -101,11 +105,11 @@ h1, h2, h3, h4, h5, h6 {
 .glass-card {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
-  backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 
-/* Markdown Rendering Styles */
+
 .markdown-body {
   max-width: none;
   font-size: 1rem;
@@ -221,7 +225,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-/* Heading Anchors */
+
 .markdown-body .icon-link {
   opacity: 0;
   transition: opacity 0.2s ease;
@@ -243,7 +247,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.125rem;
 }
 
-/* Custom Markdown Code Blocks */
+
 .markdown-body .code-block-wrapper {
   display: block;
   position: relative;
@@ -386,7 +390,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-/* Custom code block scrollbar */
+
 .markdown-body pre.hljs::-webkit-scrollbar {
   height: 6px;
 }
@@ -411,7 +415,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Utilities */
+
 .text-accent {
   color: var(--accent);
 }

@@ -1,4 +1,4 @@
-// Vite's import.meta.glob allows us to load all .md files in the directory
+
 const postFiles = import.meta.glob("@/src/content/posts/*.md", { query: '?raw', import: 'default', eager: true });
 
 function parseFrontmatter(content) {

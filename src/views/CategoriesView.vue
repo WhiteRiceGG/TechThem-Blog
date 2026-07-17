@@ -61,25 +61,25 @@ const tagFilteredPosts = computed(() => {
 
 <style scoped>
 .categories-container {
-  max-width: 56rem; /* max-w-4xl */
+  max-width: 56rem; 
   margin: 0 auto;
-  padding: 3rem 1.5rem; /* py-12 px-6 */
+  padding: 3rem 1.5rem; 
 }
 
 .categories-title {
-  font-size: 2.25rem; /* text-4xl */
+  font-size: 2.25rem; 
   font-weight: bold;
-  margin-bottom: 2rem; /* mb-8 */
+  margin-bottom: 2rem; 
   font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: -0.05em; /* tracking-tighter */
+  letter-spacing: -0.05em; 
 }
 
 .tags-filter {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem; /* gap-3 */
-  margin-bottom: 3rem; /* mb-12 */
+  gap: 0.75rem; 
+  margin-bottom: 3rem; 
 }
 
 .tag-btn {
@@ -118,7 +118,7 @@ const tagFilteredPosts = computed(() => {
 .posts-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem; /* gap-6 */
+  gap: 1.5rem; 
 }
 
 @media (min-width: 768px) {
@@ -133,13 +133,13 @@ const tagFilteredPosts = computed(() => {
 
 .no-posts {
   text-align: center;
-  padding: 5rem 0; /* py-20 */
+  padding: 5rem 0; 
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 1rem;
 }
 
-/* Card grid list item transition */
+
 .grid-item-enter-active,
 .grid-item-leave-active {
   transition: all 0.3s ease;

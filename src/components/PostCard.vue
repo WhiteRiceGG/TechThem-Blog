@@ -55,48 +55,48 @@ defineProps({
 }
 
 .post-card {
-  padding: 1.5rem; /* p-6 */
-  border-radius: 1rem; /* rounded-2xl */
+  padding: 1.5rem; 
+  border-radius: 1rem; 
   cursor: pointer;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .post-card-link:hover .post-card {
-  transform: translateY(-0.25rem); /* hover:-translate-y-1 */
+  transform: translateY(-0.25rem); 
 }
 
 .post-meta {
   display: flex;
   align-items: center;
-  gap: 1rem; /* gap-4 */
-  font-size: 0.875rem; /* text-sm */
+  gap: 1rem; 
+  font-size: 0.875rem; 
   font-family: var(--font-mono);
   color: var(--muted);
-  margin-bottom: 1rem; /* mb-4 */
+  margin-bottom: 1rem; 
 }
 
 .meta-item {
   display: flex;
   align-items: center;
-  gap: 0.25rem; /* gap-1 */
+  gap: 0.25rem; 
 }
 
 .post-title {
-  font-size: 1.25rem; /* text-xl */
+  font-size: 1.25rem; 
   font-weight: bold;
-  margin-bottom: 0.75rem; /* mb-3 */
+  margin-bottom: 0.75rem; 
   transition: color 0.2s ease;
 }
 
 .post-card-link:hover .post-title {
-  color: var(--accent); /* group-hover:text-accent */
+  color: var(--accent); 
 }
 
 .post-excerpt {
   color: var(--fg-secondary);
-  font-size: 1rem; /* text-base */
-  line-height: 1.625; /* leading-relaxed */
-  margin-bottom: 1.5rem; /* mb-6 */
+  font-size: 1rem; 
+  line-height: 1.625; 
+  margin-bottom: 1.5rem; 
 }
 
 .post-footer {
@@ -108,11 +108,11 @@ defineProps({
 .post-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
 }
 
 .post-tag {
-  font-size: 0.725rem; /* text-xs */
+  font-size: 0.725rem; 
   font-family: var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -140,14 +140,14 @@ defineProps({
   color: var(--accent);
   display: flex;
   align-items: center;
-  gap: 0.25rem; /* gap-1 */
-  font-size: 1rem; /* text-base */
+  gap: 0.25rem; 
+  font-size: 1rem; 
   font-family: var(--font-mono);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .post-card-link:hover .read-more-link {
-  opacity: 1; /* group-hover:opacity-100 */
+  opacity: 1; 
 }
 </style>

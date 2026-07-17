@@ -19,14 +19,14 @@ const mouseY = ref(0);
 const targetX = ref(0);
 const targetY = ref(0);
 
-// Use simple spring physics animation loop for smooth trailing
+
 let animationFrameId;
 
 const updatePosition = () => {
   const dx = targetX.value - mouseX.value;
   const dy = targetY.value - mouseY.value;
   
-  mouseX.value += dx * 0.1; // Spring factor
+  mouseX.value += dx * 0.1; 
   mouseY.value += dy * 0.1;
   
   animationFrameId = requestAnimationFrame(updatePosition);

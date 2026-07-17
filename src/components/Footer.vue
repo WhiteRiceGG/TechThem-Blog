@@ -43,19 +43,19 @@ const navLinks = pageRoutes
 <style scoped>
 .footer {
   border-top: 1px solid var(--border);
-  padding: 3rem 0; /* py-12 */
-  margin-top: 5rem; /* mt-20 */
+  padding: 3rem 0; 
+  margin-top: 5rem; 
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .footer-container {
-  max-width: 56rem; /* max-w-4xl */
+  max-width: 56rem; 
   margin: 0 auto;
-  padding: 0 1.5rem; /* px-6 */
+  padding: 0 1.5rem; 
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem; /* gap-6 */
+  gap: 1.5rem; 
 }
 
 @media (min-width: 768px) {
@@ -113,7 +113,7 @@ const navLinks = pageRoutes
 
 .footer-links {
   display: flex;
-  gap: 2rem; /* gap-8 */
+  gap: 2rem; 
   font-size: 0.875rem;
   font-family: var(--font-mono);
   text-transform: uppercase;

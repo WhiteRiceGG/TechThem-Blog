@@ -84,23 +84,23 @@ const techStack = [
 
 <style scoped>
 .about-container {
-  max-width: 48rem; /* max-w-3xl */
+  max-width: 48rem; 
   margin: 0 auto;
-  padding: 3rem 1.5rem; /* py-12 px-6 */
+  padding: 3rem 1.5rem; 
 }
 
 .profile-header {
   text-align: center;
-  margin-bottom: 4rem; /* mb-16 */
+  margin-bottom: 4rem; 
 }
 
 .avatar-ring {
-  width: 8rem; /* w-32 */
-  height: 8rem; /* h-32 */
-  margin: 0 auto 1.5rem auto; /* mx-auto mb-6 */
+  width: 8rem; 
+  height: 8rem; 
+  margin: 0 auto 1.5rem auto; 
   border-radius: 50%;
   background: linear-gradient(to bottom right, var(--accent), var(--border));
-  padding: 0.25rem; /* p-1 */
+  padding: 0.25rem; 
 }
 
 .avatar-content {
@@ -120,23 +120,23 @@ const techStack = [
 }
 
 .profile-name {
-  font-size: 2.25rem; /* text-4xl */
+  font-size: 2.25rem; 
   font-weight: bold;
-  margin-bottom: 0.5rem; /* mb-2 */
+  margin-bottom: 0.5rem; 
 }
 
 .profile-title {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 1rem; /* text-base */
+  font-size: 1rem; 
   text-transform: uppercase;
-  letter-spacing: 0.2em; /* tracking-[0.2em] */
+  letter-spacing: 0.2em; 
 }
 
 .about-content {
   display: flex;
   flex-direction: column;
-  gap: 3rem; /* space-y-12 */
+  gap: 3rem; 
 }
 
 .content-section {
@@ -145,12 +145,12 @@ const techStack = [
 }
 
 .section-title {
-  font-size: 1.5rem; /* text-2xl */
+  font-size: 1.5rem; 
   font-weight: bold;
-  margin-bottom: 1rem; /* mb-4 (or mb-6) */
+  margin-bottom: 1rem; 
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
 }
 
 .title-icon {
@@ -159,14 +159,14 @@ const techStack = [
 
 .about-text {
   color: var(--fg-secondary);
-  line-height: 1.625; /* leading-relaxed */
+  line-height: 1.625; 
   font-size: 1rem;
 }
 
 .grid-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem; /* gap-6 */
+  gap: 1.5rem; 
 }
 
 @media (min-width: 768px) {
@@ -176,20 +176,20 @@ const techStack = [
 }
 
 .card {
-  padding: 1.5rem; /* p-6 */
-  border-radius: 1rem; /* rounded-2xl */
+  padding: 1.5rem; 
+  border-radius: 1rem; 
 }
 
 .card-title {
   font-weight: bold;
-  margin-bottom: 0.75rem; /* mb-3 */
+  margin-bottom: 0.75rem; 
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
 }
 
 .card-text {
-  font-size: 1rem; /* text-base */
+  font-size: 1rem; 
   color: var(--fg-secondary);
   line-height: 1.5;
 }
@@ -197,37 +197,37 @@ const techStack = [
 .tech-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem; /* gap-3 */
+  gap: 0.75rem; 
 }
 
 .tech-tag {
-  padding: 0.5rem 1rem; /* px-4 py-2 */
-  border-radius: 0.5rem; /* rounded-lg */
+  padding: 0.5rem 1rem; 
+  border-radius: 0.5rem; 
   background-color: var(--card-bg);
   border: 1px solid var(--border);
   color: var(--muted);
-  font-size: 1rem; /* text-base */
+  font-size: 1rem; 
   font-family: var(--font-mono);
 }
 
 .cta-section {
-  padding-top: 3rem; /* pt-12 */
+  padding-top: 3rem; 
   border-top: 1px solid var(--border);
   text-align: center;
 }
 
 .quote {
   color: var(--fg-secondary);
-  font-size: 1rem; /* text-base */
-  margin-bottom: 1.5rem; /* mb-6 */
+  font-size: 1rem; 
+  margin-bottom: 1.5rem; 
   font-style: italic;
 }
 
 .cta-button {
   background-color: var(--accent);
   color: #000000;
-  padding: 0.75rem 2rem; /* px-8 py-3 */
-  border-radius: 9999px; /* rounded-full */
+  padding: 0.75rem 2rem; 
+  border-radius: 9999px; 
   font-weight: bold;
   border: none;
   cursor: pointer;
@@ -235,6 +235,6 @@ const techStack = [
 }
 
 .cta-button:hover {
-  transform: scale(1.05); /* hover:scale-105 */
+  transform: scale(1.05); 
 }
 </style>

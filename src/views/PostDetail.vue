@@ -46,23 +46,25 @@
 
     <!-- TOC Sidebar -->
     <aside class="toc-sidebar">
-      <div class="toc-wrapper scrollbar-hide">
+      <div class="toc-wrapper">
         <div class="toc-header">
           <List :size="14" />
           目录
         </div>
-        <nav class="toc-nav">
-          <button
-            v-for="item in toc"
-            :key="item.id"
-            @click="scrollToHeading(item.id)"
-            class="toc-link"
-            :class="{ active: activeId === item.id }"
-            :style="{ marginLeft: `${(item.level - 1) * 12}px` }"
-          >
-            {{ item.text }}
-          </button>
-        </nav>
+        <div class="toc-nav-container scrollbar-hide">
+          <nav class="toc-nav">
+            <button
+              v-for="item in toc"
+              :key="item.id"
+              @click="scrollToHeading(item.id)"
+              class="toc-link"
+              :class="{ active: activeId === item.id }"
+              :style="{ marginLeft: `${(item.level - 1) * 12}px` }"
+            >
+              {{ item.text }}
+            </button>
+          </nav>
+        </div>
 
         <button 
           @click="scrollToTop"
@@ -88,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { posts } from '@/src/data/posts';
 import { Calendar, Clock, ArrowLeft, Share2, List } from 'lucide-vue-next';
@@ -103,16 +105,29 @@ const post = ref(undefined);
 const renderedMarkdown = ref('');
 const toc = ref([]);
 const activeId = ref('');
-let observer = null;
+const headingElements = ref([]);
 
-// Initialize MarkdownIt with custom render rules for header anchors and code copy blocks
+watch(activeId, (newId) => {
+  if (!newId) return;
+  nextTick(() => {
+    const activeLink = document.querySelector('.toc-link.active');
+    const tocNavContainer = document.querySelector('.toc-nav-container');
+    if (activeLink && tocNavContainer) {
+      const wrapperRect = tocNavContainer.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      if (linkRect.top < wrapperRect.top || linkRect.bottom > wrapperRect.bottom) {
+        activeLink.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  });
+});
+
 const md = new MarkdownIt({
   html: true,
   linkify: true,
   typographer: true,
 });
 
-// Configure markdown-it code block highlight and rendering
 md.renderer.rules.fence = (tokens, idx) => {
   const token = tokens[idx];
   const code = token.content;
@@ -159,7 +174,6 @@ md.renderer.rules.fence = (tokens, idx) => {
   `;
 };
 
-// Configure heading IDs (slugs) and anchors
 const originalHeadingOpen = md.renderer.rules.heading_open || function (tokens, idx, options, _env, self) {
   return self.renderToken(tokens, idx, options);
 };
@@ -238,20 +252,26 @@ const scrollToTop = () => {
 const scrollToHeading = (id) => {
   const element = document.getElementById(id);
   if (element) {
-    const offset = 80; // Header height
+    const offset = 80;
     const bodyRect = document.body.getBoundingClientRect().top;
     const elementRect = element.getBoundingClientRect().top;
     const elementPosition = elementRect - bodyRect;
     const offsetPosition = elementPosition - offset;
 
+    window.removeEventListener('scroll', handleWindowScroll);
+    activeId.value = id;
+
     window.scrollTo({
       top: offsetPosition,
       behavior: "smooth"
     });
+
+    setTimeout(() => {
+      window.addEventListener('scroll', handleWindowScroll);
+    }, 800);
   }
 };
 
-// Handle clicks for copy buttons inside rendered HTML
 const handleMarkdownClick = (e) => {
   const button = e.target.closest('.copy-code-btn');
   if (!button) return;
@@ -263,8 +283,7 @@ const handleMarkdownClick = (e) => {
   
   copyToClipboard(code).then(() => {
     button.classList.add('copied');
-    
-    // Reset button after delay
+
     setTimeout(() => {
       button.classList.remove('copied');
     }, 2000);
@@ -274,28 +293,53 @@ const handleMarkdownClick = (e) => {
 };
 
 
+const handleScrollSpy = () => {
+  const elements = headingElements.value;
+  if (elements.length === 0) return;
+
+  const scrollPosition = window.scrollY;
+  const offset = 100;
+
+  const isBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 20;
+  if (isBottom) {
+    activeId.value = elements[elements.length - 1].id;
+    return;
+  }
+
+  let currentActiveId = elements[0].id;
+  for (let i = 0; i < elements.length; i++) {
+    const el = elements[i];
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    if (scrollPosition >= top) {
+      currentActiveId = el.id;
+    } else {
+      break;
+    }
+  }
+  activeId.value = currentActiveId;
+};
+
+let scrollTimer = null;
+const handleWindowScroll = () => {
+  if (scrollTimer) return;
+  scrollTimer = requestAnimationFrame(() => {
+    handleScrollSpy();
+    scrollTimer = null;
+  });
+};
+
 const buildToc = () => {
-  const headingElements = Array.from(document.querySelectorAll(".markdown-body h1, .markdown-body h2, .markdown-body h3"));
-  toc.value = headingElements.map((el) => ({
+  const elements = Array.from(document.querySelectorAll(".markdown-body h1, .markdown-body h2, .markdown-body h3"));
+  headingElements.value = elements;
+  toc.value = elements.map((el) => ({
     id: el.id,
     text: el.textContent?.trim() || "",
     level: parseInt(el.tagName.substring(1)),
   }));
 
-  if (observer) observer.disconnect();
-  
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeId.value = entry.target.id;
-        }
-      });
-    },
-    { rootMargin: "-100px 0px -70% 0px" }
-  );
-
-  headingElements.forEach((el) => observer?.observe(el));
+  nextTick(() => {
+    handleScrollSpy();
+  });
 };
 
 onMounted(() => {
@@ -307,20 +351,21 @@ onMounted(() => {
     
     nextTick(() => {
       buildToc();
+      window.addEventListener('scroll', handleWindowScroll);
     });
   }
 });
 
 onUnmounted(() => {
-  if (observer) observer.disconnect();
+  window.removeEventListener('scroll', handleWindowScroll);
 });
 </script>
 
 <style scoped>
 .detail-container {
-  max-width: 56rem; /* max-w-4xl */
+  max-width: 56rem; 
   margin: 0 auto;
-  padding: 3rem 1.5rem; /* py-12 px-6 */
+  padding: 3rem 1.5rem; 
   position: relative;
 }
 
@@ -331,14 +376,14 @@ onUnmounted(() => {
 .back-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
   color: var(--muted);
   background: none;
   border: none;
-  margin-bottom: 2rem; /* mb-8 */
+  margin-bottom: 2rem; 
   transition: color 0.2s ease;
   font-family: var(--font-mono);
-  font-size: 1rem; /* text-base */
+  font-size: 1rem; 
   cursor: pointer;
   animation: fadeIn 0.5s ease-out;
 }
@@ -348,35 +393,35 @@ onUnmounted(() => {
 }
 
 .post-header {
-  margin-bottom: 3rem; /* mb-12 */
+  margin-bottom: 3rem; 
 }
 
 .post-meta {
   display: flex;
   align-items: center;
-  gap: 1rem; /* gap-4 */
-  font-size: 1rem; /* text-base */
+  gap: 1rem; 
+  font-size: 1rem; 
   font-family: var(--font-mono);
   color: var(--muted);
-  margin-bottom: 1rem; /* mb-4 */
+  margin-bottom: 1rem; 
 }
 
 .meta-item {
   display: flex;
   align-items: center;
-  gap: 0.25rem; /* gap-1 */
+  gap: 0.25rem; 
 }
 
 .post-title {
-  font-size: 2.25rem; /* text-4xl */
+  font-size: 2.25rem; 
   font-weight: bold;
-  margin-bottom: 1.5rem; /* mb-6 */
-  line-height: 1.25; /* leading-tight */
+  margin-bottom: 1.5rem; 
+  line-height: 1.25; 
 }
 
 @media (min-width: 768px) {
   .post-title {
-    font-size: 3rem; /* md:text-5xl */
+    font-size: 3rem; 
   }
 }
 
@@ -386,7 +431,7 @@ onUnmounted(() => {
   justify-content: space-between;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 1rem 0; /* py-4 */
+  padding: 1rem 0; 
 }
 
 .post-tags {
@@ -396,7 +441,7 @@ onUnmounted(() => {
 }
 
 .post-tag {
-  font-size: 0.75rem; /* text-xs */
+  font-size: 0.75rem; 
   font-family: var(--font-mono);
   font-weight: 500;
   text-transform: uppercase;
@@ -451,31 +496,34 @@ onUnmounted(() => {
 
 .toc-wrapper {
   position: fixed;
-  top: 8rem; /* top-32 */
+  top: 8rem; 
   left: calc(50% + 480px);
   width: 220px;
-  max-height: calc(100vh - 10rem);
-  overflow-y: auto;
-  padding-right: 1rem; /* pr-4 */
+  padding-right: 1rem; 
 }
 
 .toc-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 0.75rem; /* text-xs */
+  font-size: 0.75rem; 
   text-transform: uppercase;
-  letter-spacing: 0.1em; /* tracking-widest */
-  margin-bottom: 1.5rem; /* mb-6 */
+  letter-spacing: 0.1em; 
+  margin-bottom: 1.5rem; 
+}
+
+.toc-nav-container {
+  max-height: 50vh;
+  overflow-y: auto;
 }
 
 .toc-nav {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* space-y-3 */
+  gap: 0.75rem; 
 }
 
 .toc-nav::before {
@@ -491,11 +539,11 @@ onUnmounted(() => {
 .toc-link {
   display: block;
   text-align: left;
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.875rem; 
   color: var(--muted);
   background: none;
   border: none;
-  padding-left: 1rem; /* pl-4 */
+  padding-left: 1rem; 
   cursor: pointer;
   position: relative;
   transition: all 0.2s ease;
@@ -520,17 +568,17 @@ onUnmounted(() => {
 }
 
 .scroll-top-btn {
-  margin-top: 3rem; /* mt-12 */
+  margin-top: 3rem; 
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
   color: var(--muted);
   background: none;
   border: none;
   font-family: var(--font-mono);
-  font-size: 0.75rem; /* text-xs */
+  font-size: 0.75rem; 
   text-transform: uppercase;
-  letter-spacing: 0.1em; /* tracking-widest */
+  letter-spacing: 0.1em; 
   cursor: pointer;
   transition: color 0.2s ease;
 }
@@ -540,24 +588,24 @@ onUnmounted(() => {
 }
 
 .scroll-top-icon {
-  transform: rotate(90deg); /* rotate-90 */
+  transform: rotate(90deg); 
 }
 
 .error-title {
-  font-size: 2.25rem; /* text-4xl */
+  font-size: 2.25rem; 
   font-weight: bold;
-  margin-bottom: 1.5rem; /* mb-6 */
+  margin-bottom: 1.5rem; 
 }
 
 .error-back-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
   color: var(--accent);
   background: none;
   border: none;
   font-family: var(--font-mono);
-  font-size: 1rem; /* text-base */
+  font-size: 1rem; 
   cursor: pointer;
   transition: color 0.2s ease;
 }

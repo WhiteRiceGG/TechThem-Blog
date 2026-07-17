@@ -8,7 +8,7 @@ export function waitForTransition() {
 export function triggerTransitionOut() {
   transitionPromise = new Promise((resolve) => {
     resolveTransition = resolve;
-    // Safety fallback to prevent hanging in case transition hooks do not fire
+    
     setTimeout(() => {
       if (resolveTransition === resolve) {
         resolve();

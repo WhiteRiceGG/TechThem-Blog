@@ -41,7 +41,7 @@ const theme = ref('dark');
 const searchQuery = ref('');
 const route = useRoute();
 
-// Provide state to all child view components
+
 provide('searchQuery', searchQuery);
 
 const filteredPosts = computed(() => {
@@ -79,7 +79,7 @@ onMounted(() => {
 </script>
 
 <style>
-/* Global page transition */
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;

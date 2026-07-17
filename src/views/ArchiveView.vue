@@ -77,16 +77,16 @@ const clearSearch = () => {
 
 <style scoped>
 .archive-container {
-  max-width: 56rem; /* max-w-4xl */
+  max-width: 56rem; 
   margin: 0 auto;
-  padding: 3rem 1.5rem; /* py-12 px-6 */
+  padding: 3rem 1.5rem; 
 }
 
 .archive-header {
   display: flex;
   flex-direction: column;
-  margin-bottom: 3rem; /* mb-12 */
-  gap: 1.5rem; /* gap-6 */
+  margin-bottom: 3rem; 
+  gap: 1.5rem; 
 }
 
 @media (min-width: 768px) {
@@ -98,11 +98,11 @@ const clearSearch = () => {
 }
 
 .archive-title {
-  font-size: 2.25rem; /* text-4xl */
+  font-size: 2.25rem; 
   font-weight: bold;
   font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: -0.05em; /* tracking-tighter */
+  letter-spacing: -0.05em; 
 }
 
 .search-wrapper {
@@ -112,13 +112,13 @@ const clearSearch = () => {
 
 @media (min-width: 768px) {
   .search-wrapper {
-    width: 16rem; /* md:w-64 */
+    width: 16rem; 
   }
 }
 
 .search-icon {
   position: absolute;
-  left: 0.75rem; /* left-3 */
+  left: 0.75rem; 
   top: 50%;
   transform: translateY(-50%);
   color: var(--muted);
@@ -127,12 +127,12 @@ const clearSearch = () => {
 
 .search-input {
   width: 100%;
-  height: 2.5rem; /* h-10 */
-  background-color: rgba(228, 228, 231, 0.05); /* bg-border/20 */
+  height: 2.5rem; 
+  background-color: rgba(228, 228, 231, 0.05); 
   border: 1px solid var(--border);
-  border-radius: 0.5rem; /* rounded-lg */
-  padding: 0.5rem 2.5rem; /* pl-10 pr-10 py-2 */
-  font-size: 0.875rem; /* text-sm */
+  border-radius: 0.5rem; 
+  padding: 0.5rem 2.5rem; 
+  font-size: 0.875rem; 
   font-family: var(--font-mono);
   color: inherit;
   transition: border-color 0.2s ease;
@@ -145,7 +145,7 @@ const clearSearch = () => {
 
 .clear-button {
   position: absolute;
-  right: 0.75rem; /* right-3 */
+  right: 0.75rem; 
   top: 50%;
   transform: translateY(-50%);
   color: var(--muted);
@@ -166,11 +166,11 @@ const clearSearch = () => {
 .timeline-list {
   position: relative;
   border-left: 1px solid var(--border);
-  margin-left: 1rem; /* ml-4 */
-  padding-left: 2rem; /* pl-8 */
+  margin-left: 1rem; 
+  padding-left: 2rem; 
   display: flex;
   flex-direction: column;
-  gap: 3rem; /* space-y-12 */
+  gap: 3rem; 
 }
 
 .timeline-item {
@@ -179,10 +179,10 @@ const clearSearch = () => {
 
 .timeline-dot {
   position: absolute;
-  left: -2.55rem; /* -left-[41px] (1px border + 32px padding + offset) */
-  top: 0.375rem; /* top-1.5 */
-  width: 1rem; /* w-4 */
-  height: 1rem; /* h-4 */
+  left: -2.55rem; 
+  top: 0.375rem; 
+  width: 1rem; 
+  height: 1rem; 
   border-radius: 50%;
   background-color: var(--bg);
   border: 2px solid var(--accent);
@@ -191,21 +191,21 @@ const clearSearch = () => {
 .item-content {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* gap-2 */
+  gap: 0.5rem; 
 }
 
 @media (min-width: 768px) {
   .item-content {
     flex-direction: row;
     align-items: baseline;
-    gap: 2rem; /* gap-8 */
+    gap: 2rem; 
   }
 }
 
 .item-date {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 1rem; /* text-base */
+  font-size: 1rem; 
   white-space: nowrap;
 }
 
@@ -217,7 +217,7 @@ const clearSearch = () => {
 }
 
 .item-title {
-  font-size: 1.25rem; /* text-xl */
+  font-size: 1.25rem; 
   font-weight: bold;
   transition: color 0.2s ease;
 }
@@ -228,8 +228,8 @@ const clearSearch = () => {
 
 .item-excerpt {
   color: var(--fg-secondary);
-  font-size: 1rem; /* text-base */
-  margin-top: 0.25rem; /* mt-1 */
+  font-size: 1rem; 
+  margin-top: 0.25rem; 
   display: -webkit-box;
   -webkit-line-clamp: 1;
   line-clamp: 1;
@@ -239,9 +239,9 @@ const clearSearch = () => {
 
 .no-results {
   text-align: center;
-  padding: 5rem 0; /* py-20 */
+  padding: 5rem 0; 
   border: 1px dashed var(--border);
-  border-radius: 1rem; /* rounded-2xl */
+  border-radius: 1rem; 
 }
 
 .no-results-text {
@@ -251,13 +251,13 @@ const clearSearch = () => {
 }
 
 .clear-search-btn {
-  margin-top: 1rem; /* mt-4 */
+  margin-top: 1rem; 
   background: none;
   border: none;
   color: var(--accent);
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 0.875rem; /* text-sm */
+  font-size: 0.875rem; 
   text-decoration: none;
 }
 
