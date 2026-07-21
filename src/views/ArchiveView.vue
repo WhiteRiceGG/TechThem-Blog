@@ -8,8 +8,7 @@
         <Search :size="16" class="search-icon" />
         <input 
           type="text"
-          :value="searchQuery"
-          @input="onSearchInput"
+          v-model="searchQuery"
           placeholder="搜索归档内容..."
           class="search-input"
         />
@@ -23,39 +22,43 @@
       </div>
     </div>
     
-    <div v-if="filteredPosts.length > 0" class="timeline-list">
-      <div 
-        v-for="post in filteredPosts"
-        :key="post.id"
-        class="timeline-item"
-      >
-        <!-- Timeline Dot -->
-        <div class="timeline-dot" />
-        
-        <div class="item-content">
-          <span class="item-date">
-            {{ post.date }}
-          </span>
-          <router-link :to="`/posts/${post.id}`" class="item-link">
-            <h2 class="item-title">
-              {{ post.title }}
-            </h2>
-            <p class="item-excerpt">
-              {{ post.excerpt }}
-            </p>
-          </router-link>
-        </div>
+    <Transition name="fade" mode="out-in">
+      <div v-if="filteredPosts.length > 0" key="list" class="timeline-list">
+        <TransitionGroup name="timeline-item" @before-leave="onBeforeLeave">
+          <div 
+            v-for="post in filteredPosts"
+            :key="post.id"
+            class="timeline-item"
+          >
+            <!-- Timeline Dot -->
+            <div class="timeline-dot" />
+            
+            <div class="item-content">
+              <span class="item-date">
+                {{ post.date }}
+              </span>
+              <router-link :to="`/posts/${post.id}`" class="item-link">
+                <h2 class="item-title">
+                  {{ post.title }}
+                </h2>
+                <p class="item-excerpt">
+                  {{ post.excerpt }}
+                </p>
+              </router-link>
+            </div>
+          </div>
+        </TransitionGroup>
       </div>
-    </div>
-    <div v-else class="no-results">
-      <p class="no-results-text">未找到与 "{{ searchQuery }}" 相关的日志</p>
-      <button 
-        @click="clearSearch"
-        class="clear-search-btn"
-      >
-        清除搜索
-      </button>
-    </div>
+      <div v-else key="no-results" class="no-results">
+        <p class="no-results-text">未找到与 "{{ searchQuery }}" 相关的日志</p>
+        <button 
+          @click="clearSearch"
+          class="clear-search-btn"
+        >
+          清除搜索
+        </button>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -66,12 +69,15 @@ import { Search, X } from 'lucide-vue-next';
 const searchQuery = inject('searchQuery');
 const filteredPosts = inject('filteredPosts');
 
-const onSearchInput = (e) => {
-  searchQuery.value = e.target.value;
-};
-
 const clearSearch = () => {
   searchQuery.value = '';
+};
+
+const onBeforeLeave = (el) => {
+  const { offsetTop, offsetHeight } = el;
+  el.style.top = `${offsetTop}px`;
+  el.style.height = `${offsetHeight}px`;
+  el.style.position = 'absolute';
 };
 </script>
 
@@ -175,6 +181,46 @@ const clearSearch = () => {
 
 .timeline-item {
   position: relative;
+  will-change: transform, opacity;
+}
+
+/* TransitionGroup animations */
+.timeline-item-move {
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.timeline-item-enter-active {
+  transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.timeline-item-leave-active {
+  transition: opacity 0.18s cubic-bezier(0.4, 0, 1, 1), transform 0.18s cubic-bezier(0.4, 0, 1, 1), filter 0.18s ease;
+  position: absolute;
+  left: 2rem;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.timeline-item-enter-from {
+  opacity: 0;
+  transform: translateY(10px) scale(0.97);
+}
+
+.timeline-item-leave-to {
+  opacity: 0;
+  transform: scale(0.94);
+  filter: blur(4px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.18s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 .timeline-dot {

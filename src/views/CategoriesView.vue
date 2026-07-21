@@ -22,7 +22,7 @@
     </div>
 
     <div class="posts-grid">
-      <TransitionGroup name="grid-item">
+      <TransitionGroup name="grid-item" @before-leave="onBeforeLeave">
         <div
           v-for="post in tagFilteredPosts"
           :key="post.id"
@@ -33,9 +33,11 @@
       </TransitionGroup>
     </div>
 
-    <div v-if="tagFilteredPosts.length === 0" class="no-posts">
-      该分类下未找到文章
-    </div>
+    <Transition name="fade">
+      <div v-if="tagFilteredPosts.length === 0" class="no-posts">
+        该分类下未找到文章
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -57,6 +59,15 @@ const tagFilteredPosts = computed(() => {
   if (selectedTag.value === null) return filteredPosts.value;
   return filteredPosts.value.filter(post => post.tags.includes(selectedTag.value));
 });
+
+const onBeforeLeave = (el) => {
+  const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = el;
+  el.style.left = `${offsetLeft}px`;
+  el.style.top = `${offsetTop}px`;
+  el.style.width = `${offsetWidth}px`;
+  el.style.height = `${offsetHeight}px`;
+  el.style.position = 'absolute';
+};
 </script>
 
 <style scoped>
@@ -119,6 +130,7 @@ const tagFilteredPosts = computed(() => {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem; 
+  position: relative;
 }
 
 @media (min-width: 768px) {
@@ -128,7 +140,7 @@ const tagFilteredPosts = computed(() => {
 }
 
 .grid-item-wrapper {
-  transition: all 0.3s ease;
+  will-change: transform, opacity;
 }
 
 .no-posts {
@@ -139,14 +151,39 @@ const tagFilteredPosts = computed(() => {
   font-size: 1rem;
 }
 
-
-.grid-item-enter-active,
-.grid-item-leave-active {
-  transition: all 0.3s ease;
+/* TransitionGroup animations */
+.grid-item-move {
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
 }
-.grid-item-enter-from,
+
+.grid-item-enter-active {
+  transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.grid-item-leave-active {
+  transition: opacity 0.18s cubic-bezier(0.4, 0, 1, 1), transform 0.18s cubic-bezier(0.4, 0, 1, 1), filter 0.18s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grid-item-enter-from {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+}
+
 .grid-item-leave-to {
   opacity: 0;
-  transform: scale(0.95);
+  transform: scale(0.88);
+  filter: blur(4px);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.18s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
